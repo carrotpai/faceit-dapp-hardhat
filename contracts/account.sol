@@ -1,25 +1,61 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
 import "hardhat/console.sol";
 
 contract Account {
+    uint constant DURATION = 7 days;
     struct Player {
-        address id;
         string nickname;
         uint balance;
+        uint rating;
+        uint lastTimeClaimed;
+        bool created;
     }
 
-    uint public baseSupply = 0;
-    uint public totalsupply = 1000000;
+    address public faceitOwner;
 
-    mapping(address => Player) balances;
+    mapping(address => Player) private balances;
 
     constructor() {
-        balances[msg.sender] = Player(msg.sender, "Tom", baseSupply);
+        faceitOwner = msg.sender;
+        console.log("Who is calling ctor: %s", msg.sender);
     }
 
-    function balanceOf(address account) external view returns (uint) {
-        return balances[account].balance;
+    function createPlayerAccount(
+        string calldata _nickname,
+        uint _rating
+    ) external {
+        require(!balances[msg.sender].created);
+
+        Player memory newPlayer = Player({
+            nickname: _nickname,
+            balance: 0,
+            rating: _rating,
+            lastTimeClaimed: block.timestamp,
+            created: true
+        });
+
+        balances[msg.sender] = newPlayer;
+    }
+
+    function getBalance() public view returns (uint) {
+        return balances[msg.sender].balance;
+    }
+
+    function balanceAccrual(uint _rating) public {
+        //require(block.timestamp - balances[msg.sender].lastTimeClaimed >= DURATION);
+        balances[msg.sender].balance += 1;
+        console.log(
+            "account %s --- new Balance: %s with rating %s",
+            msg.sender,
+            balances[msg.sender].balance,
+            _rating
+        );
+        address payable _to = payable(msg.sender);
+    }
+
+    function getETHforRating(uint _rating) private pure returns (uint) {
+        return 1;
     }
 }

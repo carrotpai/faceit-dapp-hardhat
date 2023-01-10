@@ -13,6 +13,18 @@ contract Account {
         console.log("received: %s", address(this).balance);
     }
 
+    fallback() external payable {}
+
+    modifier onlyOwner() {
+        require(msg.sender == faceitOwner);
+        _;
+    }
+
+    function withdraw() public onlyOwner {
+        address payable owner = payable(faceitOwner);
+        owner.transfer(address(this).balance);
+    }
+
     struct Player {
         string nickname;
         uint balance;
@@ -35,7 +47,7 @@ contract Account {
         //require(balances[msg.sender].created)
         balances[msg.sender].participant = true;
 
-        console.log("total sum on contract: %s", address(this).balance);
+        console.log("current contract balance: %s", address(this).balance);
     }
 
     function createPlayerAccount(

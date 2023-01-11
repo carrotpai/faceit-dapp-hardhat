@@ -72,7 +72,10 @@ contract Account {
     }
 
     function participate() public payable onlyRegistredPlayer {
-        require(msg.value >= 3750000000000000);
+        require(
+            msg.value >= 3750000000000000,
+            "not enough currency to participate"
+        );
         balances[msg.sender].participant = true;
 
         emit playerHadParticipate(msg.sender, true);

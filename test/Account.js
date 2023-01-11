@@ -107,6 +107,11 @@ describe('Account contract', () => {
             await tx.wait();
         })
 
+        it("should revert participate transaction payment without enough currency", async() => {
+            const val = ethers.utils.parseEther("0.00275");
+            await expect(accountsContract.connect(acc2).participate({ value: val })).to.be.revertedWith("not enough currency to participate");
+        })
+
         describe("participating in faceit event after 1 week", async() => {
             beforeEach(async() => {
                 const tx = await accountsContract.connect(acc2).participate({ value: ethers.utils.parseEther("0.00375") });

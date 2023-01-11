@@ -142,7 +142,7 @@ describe('Account contract', () => {
             })
 
             it("should correct work with not enough currency on contract", async() => {
-                const newRating = 5000;
+                const newRating = ethers.utils.parseEther("0.01");
                 expect(accountsContract.connect(acc2).balanceAccrual(newRating)).to.be.revertedWith("not enough currency on contract");
             })
 

@@ -75,7 +75,7 @@ describe('Account contract', () => {
         })
 
         it("correctly make a participant from player", async() => {
-            const tx = await accountsContract.connect(acc2).participate({ value: 100 });
+            const tx = await accountsContract.connect(acc2).participate({ value: ethers.utils.parseEther("0.00375") });
             let playerDto = await accountsContract.connect(acc2).getPlayer();
             expect(playerDto.participant).to.be.eq(true);
         })
@@ -100,15 +100,16 @@ describe('Account contract', () => {
         })
 
         it("should be possible to send funds from created user to contract", async() => {
-            const tx = await accountsContract.connect(acc2).participate({ value: 100 });
+            const val = ethers.utils.parseEther("0.00375");
+            const tx = await accountsContract.connect(acc2).participate({ value: val });
             await expect(() => tx)
-                .to.changeEtherBalances([acc2, accountsContract], [-100, 100]);
+                .to.changeEtherBalances([acc2, accountsContract], [-val, val]);
             await tx.wait();
         })
 
         describe("participating in faceit event after 1 week", async() => {
             beforeEach(async() => {
-                const tx = await accountsContract.connect(acc2).participate({ value: 1000 });
+                const tx = await accountsContract.connect(acc2).participate({ value: ethers.utils.parseEther("0.00375") });
                 await tx.wait();
 
                 const ownerTx = await accountsContract.connect(acc1).correctClaimTime(acc2.address);
@@ -144,7 +145,8 @@ describe('Account contract', () => {
 
         describe("participating in faceit event before 1 week", async() => {
             beforeEach(async() => {
-                const tx = await accountsContract.connect(acc2).participate({ value: 1000 });
+                const val = ethers.utils.parseEther("0.00375");
+                const tx = await accountsContract.connect(acc2).participate({ value: val });
                 await tx.wait();
             })
 

@@ -72,6 +72,7 @@ contract Account {
     }
 
     function participate() public payable onlyRegistredPlayer {
+        require(msg.value >= 3750000000000000);
         balances[msg.sender].participant = true;
 
         emit playerHadParticipate(msg.sender, true);

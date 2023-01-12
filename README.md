@@ -2,10 +2,10 @@
 This is a new product that will allow players to see a new opportunity in development and earnings while doing their favorite hobby. And modern technologies and simple use will allow the user to start earning right now.
 ## Table of Contents
 ___
-+ Documentation
-+ Install
-+ Maintainers
-+ License
++ [Documentation](##Documentation)
++ [Install](##Install)
++ [Maintainers](##Maintainers)
++ [License](##License)
 ## Documentation
 ___
 Еще нет

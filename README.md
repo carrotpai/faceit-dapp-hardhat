@@ -1,4 +1,4 @@
-# Monetization of cs go matches based on faceit
+# Monetization of Counter Strike: Global Offensive matches based on faceit
 This is a new product that will allow players to see a new opportunity in development and earnings while doing their favorite hobby. And modern technologies and simple use will allow the user to start earning right now.
 ## Table of Contents
 ___

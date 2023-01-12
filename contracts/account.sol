@@ -2,7 +2,6 @@
 pragma solidity ^0.8.9;
 
 import "hardhat/console.sol";
-import "solidity-docgen";
 
 /// @title Player account contract
 /// @notice Player account contract that represent basin functionality of faceit webwallet
@@ -65,7 +64,6 @@ contract Account {
     }
 
     /// @notice Function to check current balance on contract
-    /// @param void
     /// @return balance on current contract
     function contractCurrentBalance() public view returns (uint) {
         return address(this).balance;
@@ -91,8 +89,6 @@ contract Account {
 
     /// @notice payble access to participate, only for registered users
     /// @dev set inner state of player to be participant
-    /// @param void
-    /// @return void
     function participate() public payable onlyRegistredPlayer {
         require(
             msg.value >= 3750000000000000,
@@ -108,7 +104,6 @@ contract Account {
     /// @dev add new struct to mapping (map to address)
     /// @param _nickname player nickname
     /// @param _rating player rating
-    /// @return void
     function createPlayerAccount(
         string calldata _nickname,
         uint _rating
@@ -158,7 +153,6 @@ contract Account {
 
     /// @notice funtion for owner usage
     /// @dev owner function to correct some player claim time
-    /// @return void
     function correctClaimTime(address _player) public onlyOwner {
         require(balances[_player].created);
         require(balances[_player].participant);
@@ -169,7 +163,6 @@ contract Account {
     /// @notice core function that accrual balance on player waller based on his rating increase
     /// @dev change claim date to now and rating, doing transaction on player wallet
     /// @param _rating player new rating
-    /// @return void
     function balanceAccrual(
         uint _rating
     ) public onlyRegistredPlayer onlyParticipant {
@@ -204,7 +197,6 @@ contract Account {
 
     /// @notice function to frontend usage to estimate time to next claim
     /// @dev now - last time claimed
-    /// @return void
     function getTimeForNextClaim()
         public
         view

@@ -163,9 +163,9 @@ describe('Account contract', () => {
 
             })
 
-            it("should be 1 sec after account creation (can't claim)", async() => {
+            it("should return false if week hasn't passed", async() => {
                 const timestamp = await accountsContract.connect(acc2).getTimeForNextClaim();
-                expect(timestamp.toNumber()).to.be.lessThanOrEqual(1);
+                expect(timestamp.toNumber()).to.be.eq(false);
 
             })
 

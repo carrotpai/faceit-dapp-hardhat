@@ -15,10 +15,10 @@ contract Account {
     /// @notice storing player info [wallet address, balance, last time claimed points, bool state accountCreated, bool state Participant]
     /// @dev Used for storing player data for frontend
     event playerAccountCreated(
-        address _player,
+        address indexed _player,
         uint _balance,
         uint _lastTimeClaimed,
-        bool _created,
+        bool indexed _created,
         bool _participant
     );
 
@@ -26,11 +26,10 @@ contract Account {
     /// @dev Used for storing player data for frontend
     event balanceChanged(
         address indexed _player,
-        uint _newBalance,
+        uint indexed _newBalance,
         uint _gain,
         uint _timestamp
     );
-
     /// @notice Used for storing player participant state for frontend
     /// @dev Used for storing player data for frontend
     event playerHadParticipate(address _player, bool _participant);
@@ -114,7 +113,10 @@ contract Account {
         string calldata _nickname,
         uint _rating
     ) external {
-        require(!balances[msg.sender].created);
+        require(
+            !balances[msg.sender].created,
+            "User with this name is already created"
+        );
 
         Player memory newPlayer = Player({
             nickname: _nickname,
@@ -208,9 +210,13 @@ contract Account {
         view
         onlyRegistredPlayer
         onlyParticipant
-        returns (uint)
+        returns (bool)
     {
-        return block.timestamp - balances[msg.sender].lastTimeClaimed;
+        if (block.timestamp - balances[msg.sender].lastTimeClaimed > 7 days) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /// @notice function to estimate gains based on rating increase

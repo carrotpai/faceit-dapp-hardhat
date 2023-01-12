@@ -165,7 +165,7 @@ describe('Account contract', () => {
 
             it("should return false if week hasn't passed", async() => {
                 const timestamp = await accountsContract.connect(acc2).getTimeForNextClaim();
-                expect(timestamp.toNumber()).to.be.eq(false);
+                expect(timestamp).to.be.eq(false);
 
             })
 

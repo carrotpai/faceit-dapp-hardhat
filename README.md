@@ -8,7 +8,7 @@ ___
 + [License](#License)
 ## Documentation
 ___
-Еще нет
+Documentation location in docs/index.html
 ## Install
 ___
 1. compiling contracts  `npx hardhed compile`

@@ -8,19 +8,19 @@ contract Account {
 
     event Received(address, uint, uint);
     event playerAccountCreated(
-        address _player,
+        address indexed _player,
         uint _balance,
         uint _lastTimeClaimed,
-        bool _created,
+        bool indexed _created,
         bool _participant
     );
     event balanceChanged(
         address indexed _player,
-        uint _newBalance,
+        uint indexed _newBalance,
         uint _gain,
         uint _timestamp
     );
-    event playerHadParticipate(address _player, bool _participant);
+    event playerHadParticipate(address indexed _player, bool _participant);
 
     receive() external payable {
         emit Received(msg.sender, msg.value, block.timestamp);
@@ -86,7 +86,7 @@ contract Account {
         string calldata _nickname,
         uint _rating
     ) external {
-        require(!balances[msg.sender].created);
+        require(!balances[msg.sender].created, "User with this name is already created");
 
         Player memory newPlayer = Player({
             nickname: _nickname,
@@ -164,9 +164,13 @@ contract Account {
         view
         onlyRegistredPlayer
         onlyParticipant
-        returns (uint)
+        returns (bool)
     {
-        return block.timestamp - balances[msg.sender].lastTimeClaimed;
+        if (block.timestamp - balances[msg.sender].lastTimeClaimed > 7 days){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function getETHforRating(uint _rating) private returns (uint) {

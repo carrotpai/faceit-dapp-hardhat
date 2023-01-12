@@ -3,6 +3,7 @@
 
 require("@nomiclabs/hardhat-waffle");
 require('solidity-coverage')
+require('hardhat-docgen');
 
 
 module.exports = {
@@ -16,5 +17,10 @@ module.exports = {
             url: "http://127.0.0.1:8545/",
             chainId: 31337,
         },
+    },
+    docgen: {
+        path: './docs',
+        clear: true,
+        runOnCompile: false,
     }
 };

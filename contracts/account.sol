@@ -4,7 +4,7 @@ pragma solidity ^0.8.9;
 import "hardhat/console.sol";
 
 /// @title Player account contract
-/// @notice Player account contract that represent basin functionality of faceit webwallet
+/// @notice Player account contract that represent basic functions of faceit webwallet
 /// @dev test coverage over 80%
 contract Account {
     uint constant DURATION = 7 days;
@@ -33,11 +33,14 @@ contract Account {
     /// @dev Used for storing player data for frontend
     event playerHadParticipate(address _player, bool _participant);
 
+    /// @notice ether receiver function
     receive() external payable {
         emit Received(msg.sender, msg.value, block.timestamp);
         console.log("received: %s", address(this).balance);
     }
 
+    /// @notice fallback function
+    /// @dev empty fallback function
     fallback() external payable {}
 
     /// @dev only owner modifier
@@ -82,6 +85,8 @@ contract Account {
 
     mapping(address => Player) private balances;
 
+    /// @notice contract constractor
+    /// @dev set ownership of contract
     constructor() {
         faceitOwner = msg.sender;
         console.log("Who is calling ctor: %s", msg.sender);

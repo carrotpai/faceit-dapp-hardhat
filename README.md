@@ -8,7 +8,7 @@ ___
 + [License](#License)
 ## Documentation
 ___
-Documentation location in docs/index.html
+Documentation location in [docs/index.html](https://github.com/carrotpai/faceit-dapp-hardhat/blob/dev/docs/index.html)
 ## Install
 ___
 1. compiling contracts  `npx hardhed compile`
